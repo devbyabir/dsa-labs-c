@@ -11,7 +11,7 @@ struct Queue {
     int rear;
 };
 
-struct Queue* createQueue() {
+struct Queue* createQueue(void) {
     struct Queue* q = malloc(sizeof(struct Queue));
     if (q == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
     q->front = -1;
@@ -54,7 +54,7 @@ struct Stack {
     int top;
 };
 
-struct Stack* createStack() {
+struct Stack* createStack(void) {
     struct Stack* s = malloc(sizeof(struct Stack));
     if (s == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
     s->top = -1;
