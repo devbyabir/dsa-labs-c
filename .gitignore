@@ -1,0 +1,10 @@
+build/
+*.exe
+*.o
+*.obj
+*.out
+__pycache__/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

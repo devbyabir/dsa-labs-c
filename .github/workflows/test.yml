@@ -1,0 +1,15 @@
+name: C labs
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and run regression tests
+        run: python3 tests/test_labs.py
+        env:
+          CC: ${{ matrix.compiler }}
+          CFLAGS: -fsanitize=address,undefined -fno-omit-frame-pointer -g
