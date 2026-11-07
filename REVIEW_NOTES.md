@@ -72,6 +72,10 @@ jobs, `test (gcc)` and `test (clang)`, compiled all 11 programs and passed the
 regression suite with `-fsanitize=address,undefined`. This result covers the
 code as of 748cb25 only.
 
-**Final-review changes.** The lab 6 fix and the new test cases have not been
-compiled or run yet: no C compiler was available on the review machine. They
-will be verified by GitHub Actions (GCC and Clang, with sanitizers) once pushed.
+**Final-review changes, commit 9b491cf.** No C compiler was available on the
+review machine, so the lab 6 fix and the new test cases were first compiled and
+run by GitHub Actions. The
+[run](https://github.com/devbyabir/dsa-labs-c/actions/runs/42379732751)
+triggered by the push of 9b491cf on 7 November 2026 succeeded: `test (gcc)` and
+`test (clang)` both passed the full suite, including the new cases, with
+`-fsanitize=address,undefined`.
