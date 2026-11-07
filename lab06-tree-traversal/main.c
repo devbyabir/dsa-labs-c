@@ -1,4 +1,5 @@
-/* DSA Lab 6: tree traversal. Reviewed in 2026. */
+/* DSA Lab 6: tree traversal. Reviewed in 2026.
+   Final review (2026-11): end the traversal output with a newline. */
 #include<stdio.h>
 #include<stdlib.h>
 struct node
@@ -42,6 +43,7 @@ void tree_traversal (struct node *root)
 	    flag = 0;
 	}
     }
+  printf ("\n");
 }
 
 void push (struct stack **top, struct node *n)
