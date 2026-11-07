@@ -49,6 +49,15 @@ class Labs(unittest.TestCase):
             self.run_lab(3, expression + "\n", False)
         self.run_lab(3, "1" * 130 + "\n", False)
 
+    def test_postfix_boundaries(self):
+        # 126 characters plus a newline fit the buffer; 127 do not.
+        self.assertIn("Result: 1", self.run_lab(3, "1" + " " * 125 + "\n"))
+        self.run_lab(3, "1" + " " * 126 + "\n", False)
+        self.assertIn("Invalid expression.", self.run_lab(3, "23++\n", False))
+        # 9 to the 10th power overflows int in either direction before the last step.
+        for expression in ("9" + "9*" * 10, "09-" + "9*" * 10):
+            self.assertIn("Result out of range.", self.run_lab(3, expression + "\n", False))
+
     def test_queue_randomized(self):
         rng = random.Random(2026)
         for size in (0, 1, 2, 5, 50, 100):
@@ -57,18 +66,21 @@ class Labs(unittest.TestCase):
                 expected = values[:size-k] + list(reversed(values[size-k:])) if k else values
                 output = self.run_lab(4, f"{k} {size} " + " ".join(map(str, values)))
                 self.assertTrue(output.rstrip().endswith("[" + ",".join(map(str, expected)) + "]"), output)
-        for data in ("3 2", "-1 2", "0 101", "x", "1 1 x"):
+        for data in ("3 2", "-1 2", "0 101", "x", "1 1 x", "1 0", "101 100"):
             self.run_lab(4, data, False)
 
     def test_tree_and_graphs(self):
-        self.assertIn("13", self.run_lab(5))
-        self.assertEqual(self.run_lab(6).strip(), "8 5 7 6 4 9 8")
+        self.assertIn("Result of the expression tree: 13\n", self.run_lab(5))
+        self.assertEqual(self.run_lab(6), "8 5 7 6 4 9 8 \n")
         self.assertEqual(self.run_lab(7).strip(), "0 1 2 3 4 5 6")
         result = self.run_lab(8)
         for vertex, distance in enumerate((0, 8, 5, 9, 7)):
             self.assertIn(f"V0 and V{vertex} is {distance}", result)
         edges = self.run_lab(9).splitlines()[1:]
         self.assertEqual(sum(int(line.split()[-1]) for line in edges), 10)
+        self.assertEqual([line.split() for line in edges],
+                         [["3", "-", "1", "4"], ["0", "-", "2", "3"],
+                          ["2", "-", "3", "2"], ["3", "-", "4", "1"]])
 
     def test_substring(self):
         for sentence, word, expected in (("hello world", "world", "position : 7"),
@@ -77,6 +89,10 @@ class Labs(unittest.TestCase):
                                           ("hello", "", "position : 1")):
             self.assertIn(expected, self.run_lab(10, sentence + "\n" + word + "\n"))
         self.run_lab(10, "x" * 80 + "\na\n", False)
+        # Each line may hold 48 characters plus a newline; 49 are rejected.
+        self.assertIn("position : 1", self.run_lab(10, "a" * 48 + "\n" + "a" * 48 + "\n"))
+        self.run_lab(10, "a" * 49 + "\na\n", False)
+        self.run_lab(10, "a" * 48 + "\n" + "a" * 49 + "\n", False)
         self.run_lab(10, "", False)
 
     def test_quicksort_randomized(self):
@@ -86,6 +102,7 @@ class Labs(unittest.TestCase):
             expected = "".join(sorted(text, reverse=True))
             self.assertIn("Characters in descending order: " + expected + "\n",
                           self.run_lab(11, text + "\n"))
+        self.run_lab(11, "x" * 999 + "\n", False)
         self.run_lab(11, "x" * 1000 + "\n", False)
         self.run_lab(11, "", False)
 
