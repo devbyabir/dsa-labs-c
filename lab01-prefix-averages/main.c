@@ -31,7 +31,8 @@ int main(void)
     int n, i;
     int X[100];
     printf("Enter The Number of Elements: ");
-    if (!read_int(&n) || n < 1 || n > 100) {
+    if (!read_int(&n) || n < 1 || n > 100)
+    {
         fputs("Invalid input.\n", stderr);
         return 1;
     }
@@ -39,13 +40,14 @@ int main(void)
     for (i = 0; i < n; i++)
     {
         printf("Enter The Element : ");
-        if (!read_int(&X[i]) || X[i] < -1000000 || X[i] > 1000000) {
+        if (!read_int(&X[i]) || X[i] < -1000000 || X[i] > 1000000)
+        {
             fputs("Invalid input.\n", stderr);
             return 1;
         }
     }
     double A[100];
-     prefixAverages2(X, n, A);
+    prefixAverages2(X, n, A);
 
     printf("Prefix Averages: \n");
     for (int i = 0; i < n; i++)

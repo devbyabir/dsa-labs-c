@@ -80,8 +80,38 @@ ordinary inputs, invalid inputs, input-length and queue boundaries, the fixed
 tree and graph results, and randomized queue/string cases. Set `CC` to select a
 compiler and `CFLAGS` for extra flags.
 
-GitHub Actions runs the suite with GCC and Clang, both with the address and
-undefined-behavior sanitizers. The
-[baseline run for commit 748cb25](https://github.com/devbyabir/dsa-labs-c/actions/runs/42000471719)
-passed on both compilers. Changes made after that commit are listed, with their
-own verification status, in [REVIEW_NOTES.md](REVIEW_NOTES.md#verification-status).
+GitHub Actions checks formatting and runs normal and sanitizer builds with GCC
+and Clang. Sanitizer errors are fatal, and the runner checks exact exit status
+and expected error diagnostics. It also exercises linked-list and graph functions
+on additional inputs, numeric reader failures, and adversarial quicksort inputs.
+Seven runner self-tests ensure crashes and unexpected diagnostics cannot pass.
+
+## Build tooling
+
+With GNU Make, Python 3.9+, GCC/Clang and clang-format 18 installed:
+
+```sh
+make CC=gcc
+make test CC=gcc
+make sanitize CC=clang
+make format-check
+make format
+make clean
+```
+
+`make` writes standalone executables to `build/`. Tests compile their own temporary
+executables and remove them afterward. Make targets use a POSIX shell; on Windows
+use WSL/MSYS2, or invoke the Python test script directly with a compiler on PATH.
+The shared numeric reader must remain alongside labs 1 and 4. Supported arithmetic
+assumes 32-bit `int` and at least 64-bit `long long`.
+
+Each lab folder contains a short algorithm explanation, complexity analysis,
+example and limitations. See [tests/README.md](tests/README.md) for testing details.
+
+## Provenance and reuse
+
+This is a public coursework archive with **no repository-wide open-source license**.
+The original sources of every inherited fragment have not been established.
+[LICENSE.md](LICENSE.md) states the licensing status; [ATTRIBUTION.md](ATTRIBUTION.md)
+records known provenance and gaps. Do not interpret publication as a blanket grant
+to reuse third-party material.

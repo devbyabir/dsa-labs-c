@@ -12,7 +12,11 @@ struct Node
 struct Node *createNode(char data)
 {
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
-    if (!newNode) { perror("malloc"); exit(EXIT_FAILURE); }
+    if (!newNode)
+    {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
     newNode->data = data;
     newNode->left = newNode->right = NULL;
     return newNode;
