@@ -79,3 +79,25 @@ run by GitHub Actions. The
 triggered by the push of 9b491cf on 7 November 2026 succeeded: `test (gcc)` and
 `test (clang)` both passed the full suite, including the new cases, with
 `-fsanitize=address,undefined`.
+
+## Quality pass (2026-11-11)
+
+- Tests now require exact exit codes and expected diagnostics. Crashes and
+  unexpected stderr fail; sanitizers are configured not to recover from errors.
+  Seven runner self-tests check the rejection rules.
+- Added function-level C harnesses for list boundary positions, disconnected and
+  alternative graphs, unreachable/overflowing paths, and input stream failures.
+  Added malformed/NUL numeric input and adversarial quicksort regression cases.
+- Numeric input rejects embedded NUL and stream errors. Line-read failures now
+  report an explicit error, while valid example outputs remain unchanged.
+- Standardized C formatting, added Make targets, restricted/pinned CI actions
+  and configured monthly action dependency updates.
+- Added per-lab algorithm, complexity, examples and limits. LICENSE.md and
+  ATTRIBUTION.md clarify the known provenance without relicensing inherited
+  fragments whose authorship has not been established.
+
+Local checks: all 11 labs and four C harnesses compiled with Zig 0.15.2's C
+compiler using C11 and -Wall -Wextra -Wpedantic -Werror. Seven runner self-tests,
+clang-format 18.1.8 and documentation-link checks passed. Full runtime and
+sanitizer verification is performed by the PR's Linux GCC/Clang CI; no local
+runtime pass is claimed (Windows Application Control previously blocked binaries).

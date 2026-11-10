@@ -11,7 +11,11 @@ typedef struct Node
 Node *createNode(int data)
 {
     Node *newNode = (Node *)malloc(sizeof(Node));
-    if (newNode == NULL) { perror("malloc"); exit(EXIT_FAILURE); }
+    if (newNode == NULL)
+    {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
     newNode->data = data;
     newNode->next = NULL;
     return newNode;
@@ -19,12 +23,14 @@ Node *createNode(int data)
 
 int swap(Node **head, int position)
 {
-    if (position < 1) return 0;
+    if (position < 1)
+        return 0;
     Node **link = head;
     for (int i = 1; i < position && *link != NULL; i++)
         link = &(*link)->next;
     Node *current = *link;
-    if (current == NULL || current->next == NULL) return 0;
+    if (current == NULL || current->next == NULL)
+        return 0;
     Node *next = current->next;
     current->next = next->next;
     next->next = current;
@@ -59,6 +65,11 @@ int main(void)
     printf("List after swapping at position %d: ", position);
     printList(head);
 
-    while (head != NULL) { Node *next = head->next; free(head); head = next; }
+    while (head != NULL)
+    {
+        Node *next = head->next;
+        free(head);
+        head = next;
+    }
     return 0;
 }

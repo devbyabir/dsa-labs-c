@@ -1,15 +1,24 @@
 name: C labs
 on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     strategy:
+      fail-fast: false
       matrix:
         compiler: [gcc, clang]
     steps:
-      - uses: actions/checkout@v4
-      - name: Compile and run regression tests
-        run: python3 tests/test_labs.py
-        env:
-          CC: ${{ matrix.compiler }}
-          CFLAGS: -fsanitize=address,undefined -fno-omit-frame-pointer -g
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - name: Check formatting
+        run: make format-check
+      - name: Build standalone labs
+        run: make CC=${{ matrix.compiler }}
+      - name: Run regression and harness tests
+        run: make test CC=${{ matrix.compiler }}
+      - name: Run with sanitizers
+        run: make sanitize CC=${{ matrix.compiler }}
