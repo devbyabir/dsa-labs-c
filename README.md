@@ -7,8 +7,10 @@ The programs here are reviewed versions of the 2024 submissions, not unchanged
 copies. [REVIEW_NOTES.md](REVIEW_NOTES.md) records where each one came from and
 every correction made since.
 
-This follows my [first-semester C labs](https://github.com/devbyabir/c-programming-labs).
-The focus here is on linked structures, stacks, queues, trees and graph algorithms.
+## Coursework sequence
+
+1. **Semester 1 (2023):** [C Programming Labs](https://github.com/devbyabir/c-programming-labs) introduced the fundamentals of C.
+2. **Semester 2 (2024):** DSA Labs in C builds on those fundamentals with linked structures, stacks, queues, trees and graph algorithms.
 
 ## Labs
 
