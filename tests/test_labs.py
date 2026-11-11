@@ -75,8 +75,8 @@ class Labs(unittest.TestCase):
             self.run_lab(11, data, False)
         self.assertIn("Result: 1", self.run_lab(3, "1" + " " * 125))
         self.run_lab(3, "1" + " " * 126, False)
-        self.assertIn("position : 1", self.run_lab(10, "a\n" + "a" * 48))
-        self.run_lab(10, "a\n" + "a" * 49, False)
+        self.assertIn("position : 1", self.run_lab(10, "a" * 48 + "\n" + "a" * 48))
+        self.run_lab(10, "a" * 48 + "\n" + "a" * 49, False)
         self.assertIn("Characters in descending order: " + "x" * 998,
                       self.run_lab(11, "x" * 998))
         self.run_lab(11, "x" * 999, False)
