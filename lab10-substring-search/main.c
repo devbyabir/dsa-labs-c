@@ -1,4 +1,5 @@
 /* DSA Lab 10: substring search. Reviewed in 2026. */
+#include "../include/read_line.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,12 +41,7 @@ int main(void)
     int pos;
 
     puts("\nEnter a sentence: ");
-    if (!fgets(sntnc, sizeof(sntnc), stdin))
-    {
-        fputs("Invalid input.\n", stderr);
-        return 1;
-    }
-    if ((!strchr(sntnc, '\n') && !feof(stdin)) || ferror(stdin))
+    if (!read_line(sntnc, sizeof sntnc))
     {
         fputs("Invalid input.\n", stderr);
         return 1;
@@ -53,12 +49,7 @@ int main(void)
     sntnc[strcspn(sntnc, "\n")] = '\0';
 
     puts("\nEnter a word: ");
-    if (!fgets(word, sizeof(word), stdin))
-    {
-        fputs("Invalid input.\n", stderr);
-        return 1;
-    }
-    if ((!strchr(word, '\n') && !feof(stdin)) || ferror(stdin))
+    if (!read_line(word, sizeof word))
     {
         fputs("Invalid input.\n", stderr);
         return 1;

@@ -1,20 +1,15 @@
 /* Evaluate postfix expressions with single-digit operands and + - * /. */
+#include "../include/read_line.h"
 #include <ctype.h>
 #include <limits.h>
 #include <stdio.h>
-#include <string.h>
 
 int main(void)
 {
     char expression[128];
     int stack[128], count = 0;
     printf("Enter a postfix expression: ");
-    if (!fgets(expression, sizeof expression, stdin))
-    {
-        fputs("Invalid input.\n", stderr);
-        return 1;
-    }
-    if ((!strchr(expression, '\n') && !feof(stdin)) || ferror(stdin))
+    if (!read_line(expression, sizeof expression))
     {
         fputs("Invalid input.\n", stderr);
         return 1;

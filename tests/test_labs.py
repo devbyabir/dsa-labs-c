@@ -66,6 +66,21 @@ class Labs(unittest.TestCase):
         for expression in ("9" + "9*" * 10, "09-" + "9*" * 10):
             self.assertIn("Result out of range.", self.run_lab(3, expression + "\n", False, "Result out of range."))
 
+    def test_embedded_nul_line_input(self):
+        for data in ("23+\0ignored", "23+\0ignored\n"):
+            self.run_lab(3, data, False)
+        for data in ("hello world\nworld\0ignored", "hello world\nworld\0ignored\n"):
+            self.run_lab(10, data, False)
+        for data in ("ab\0ignored", "ab\0ignored\n"):
+            self.run_lab(11, data, False)
+        self.assertIn("Result: 1", self.run_lab(3, "1" + " " * 125))
+        self.run_lab(3, "1" + " " * 126, False)
+        self.assertIn("position : 1", self.run_lab(10, "a\n" + "a" * 48))
+        self.run_lab(10, "a\n" + "a" * 49, False)
+        self.assertIn("Characters in descending order: " + "x" * 998,
+                      self.run_lab(11, "x" * 998))
+        self.run_lab(11, "x" * 999, False)
+
     def test_queue_randomized(self):
         rng = random.Random(2026)
         for size in (0, 1, 2, 5, 50, 100):

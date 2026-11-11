@@ -1,4 +1,5 @@
 /* DSA Lab 11: quicksort. Reviewed in 2026. */
+#include "../include/read_line.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,12 +32,7 @@ int main(void)
 {
     char input[1000];
     printf("Enter a string : ");
-    if (!fgets(input, sizeof(input), stdin))
-    {
-        fputs("Invalid input.\n", stderr);
-        return 1;
-    }
-    if ((!strchr(input, '\n') && !feof(stdin)) || ferror(stdin))
+    if (!read_line(input, sizeof input))
     {
         fputs("Invalid input.\n", stderr);
         return 1;
